@@ -12,7 +12,7 @@ fetch('products.json')
   .then( json => initialize(json) )
   .catch( err => console.error(`Fetch problem: ${err.message}`) );
 
-// sets up the app logic, declares required variables, contains all the other functions
+// sets up the app logic, declares required variables, and contains all the other functions
 function initialize(products) {
   // grab the UI elements that we need to manipulate
   const category = document.querySelector('#category');
@@ -46,7 +46,7 @@ function initialize(products) {
   searchBtn.addEventListener('click', selectCategory);
 
   function selectCategory(e) {
-    // Use preventDefault() to stop the form submitting — that would ruin
+    // Use preventDefault() to stop the form from submitting — that would ruin
     // the experience
     e.preventDefault();
 
@@ -60,10 +60,10 @@ function initialize(products) {
     if (category.value === lastCategory && searchTerm.value.trim() === lastSearch) {
       return;
     } else {
-      // update the record of last category and search term
+      // update the record of the last category and search term
       lastCategory = category.value;
       lastSearch = searchTerm.value.trim();
-      // In this case we want to select all products, then filter them by the search
+      // In this case, we want to select all products, then filter them by the search
       // term, so we just set categoryGroup to the entire JSON object, then run selectProducts()
       if (category.value === 'All') {
         categoryGroup = products;
@@ -124,13 +124,13 @@ function initialize(products) {
   }
 
   // fetchBlob uses fetch to retrieve the image for that product, and then sends the
-  // resulting image display URL and product object on to showProduct() to finally
+  // resulting image display URL and product object onto showProduct() to finally
   // display it
   function fetchBlob(product) {
     // construct the URL path to the image file from the product.image property
     const url = `images/${product.image}`;
     // Use fetch to fetch the image, and convert the resulting response to a blob
-    // Again, if any errors occur we report them in the console.
+    // Again, if any errors occur, we report them in the console.
     fetch(url)
       .then( response => {
         if (!response.ok) {
@@ -144,7 +144,7 @@ function initialize(products) {
 
   // Display a product inside the <main> element
   function showProduct(blob, product) {
-    // Convert the blob to an object URL — this is basically an temporary internal URL
+    // Convert the blob to an object URL — this is basically a temporary internal URL
     // that points to an object stored inside the browser
     const objectURL = URL.createObjectURL(blob);
     // create <section>, <h2>, <p>, and <img> elements
@@ -161,7 +161,7 @@ function initialize(products) {
     heading.textContent = product.name.replace(product.name.charAt(0), product.name.charAt(0).toUpperCase());
 
     // Give the <p> textContent equal to the product "price" property, with a $ sign in front
-    // toFixed(2) is used to fix the price at 2 decimal places, so for example 1.40 is displayed
+    // toFixed(2) is used to fix the price at 2 decimal places, so for example, 1.40 is displayed
     // as 1.40, not 1.4.
     para.textContent = `$${product.price.toFixed(2)}`;
 
